@@ -11,6 +11,12 @@ class Init {
         const server = hapi.server({
             port: process.env.PORT,
             host: process.env.HOST,
+            routes: {
+                cors: {
+                  origin: ['*'],
+                  headers: ['Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Authorization', 'Content-Type', 'If-None-Match']
+                },
+              }
         });
 
         await Connection.dbconnection();
