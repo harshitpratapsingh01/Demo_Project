@@ -1,6 +1,6 @@
 import { request } from 'http';
 import { UserOnborading } from '../controller/controller.onboarding';
-import { Validate } from '../middleware/user.validation';
+// import { Validate } from '../middleware/user.validation';
 import Joi from "joi"
 
 const UserRoutes = [
@@ -43,9 +43,12 @@ const UserRoutes = [
     {
         method: 'POST',
         path: '/logout',
+        options: {
+            auth: 'user'
+        },
         handler: (request, h) => {
-            const token = request.headers.authorization;
-            return UserOnborading.logout_user(token, h);
+            const {user} = request
+            return UserOnborading.logout_user(user, h);
         }
     },
     {

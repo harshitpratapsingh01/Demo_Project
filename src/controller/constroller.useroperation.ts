@@ -1,14 +1,12 @@
 import { User } from "../models/DbSchema";
 import { Redis } from "../middleware/redis/redis.session";
-import { Validate } from "../middleware/user.validation";
-import { upload } from "../middleware/imageUploader/image.uploader";
+import  upload  from "../middleware/imageUploader/image.uploader";
 import fs from "fs";
 
 
 export class UserOperations{
-    static async getProfile(token, h) {
+    static async getProfile(user, h) {
         try {
-            const user = await Validate.verify_token(token);
             const isUser = await User.findOne({ where: { email: user.email }, attributes: { exclude: ['password', 'createdAt', 'updatedAt'] } });
             if (isUser) {
                 const status = await Redis.isActiv(isUser);
@@ -28,9 +26,8 @@ export class UserOperations{
         }
     }
 
-    static async deleteUser(token, h){
+    static async deleteUser(user, h){
         try{
-            const user = await Validate.verify_token(token);
             const isUser = await User.findOne({where: {email: user.email}});
             if(!isUser){
                 return h.response({message: "User not found"}).code(400);
@@ -47,11 +44,9 @@ export class UserOperations{
     }
 
 
-    static async set_profile_pic(request: any, h){
+    static async set_profile_pic(user, file, request: any, h){
         try{
-            upload.single('photo');
-            const user = await Validate.verify_token(request.headers.authorization);
-            console.log(user);
+            console.log(user)
             if(!user){
                 return h.response({message: "User Not Found"}).code(404);
             }

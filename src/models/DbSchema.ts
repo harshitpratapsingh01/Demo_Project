@@ -1,6 +1,6 @@
-import { Model, DataTypes } from 'sequelize';
 import Sequelize from 'sequelize';
 import { sequelize } from '../core/DbConnection';
+import { Property } from './schema.property';
 
 
 const User = sequelize.define('user', {

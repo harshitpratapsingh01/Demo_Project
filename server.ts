@@ -1,11 +1,8 @@
 import hapi from "@hapi/hapi";
-import { Boom } from "@hapi/boom";
 import * as dotenv from 'dotenv';
 import { Connection } from "./src/core/DbConnection";
-import { User } from "./src/models/DbSchema";
-import UserRoutes from "./src/routes/user.routers";
-import { PropertyRoutes } from "./src/routes/property.router";
-import { OperationRoutes } from "./src/routes/useroperation.routes";
+import { routes } from "./src/routes/index.routes";
+import plugin from "./src/middleware/userAuth";
 
 dotenv.config();
 
@@ -17,17 +14,9 @@ class Init {
         });
 
         await Connection.dbconnection();
-        // try{
-        //     await User.sync({ alter: true });
-        //     console.log('All models were synchronized successfully.');
-        // }
-        // catch(err){
-        //     console.log(err);
-        // }
+        await server.register(plugin);
 
-        server.route(UserRoutes);
-        server.route(PropertyRoutes);
-        server.route(OperationRoutes)
+        server.route(routes);
         await server.start();
         console.log(`Server running on ${server.info.uri}`);
     }

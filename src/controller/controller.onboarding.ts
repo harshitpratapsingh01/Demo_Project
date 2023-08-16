@@ -1,11 +1,9 @@
 import { User } from "../models/DbSchema";
-import { Validate } from "../middleware/user.validation";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt";
 import { Sessions } from "./controller.session";
 import { Redis } from "../middleware/redis/redis.session";
 import nodemailer from "nodemailer"
-import * as Boom from "@hapi/boom";
 
 export class UserOnborading {
     static async signup(payload, h) {
@@ -62,9 +60,8 @@ export class UserOnborading {
     }
 
 
-    static async logout_user(token, h) {
+    static async logout_user(user, h) {
         try {
-            const user = await Validate.verify_token(token);
             const isUser: any = await User.findOne({ where: { email: user.email } });
             console.log(isUser)
             if (isUser) {

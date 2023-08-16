@@ -1,5 +1,6 @@
 import { sequelize } from "../core/DbConnection";
 import Sequelize from "sequelize";
+import { User } from "./DbSchema";
 
 const Property = sequelize.define('Product', {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, },
@@ -26,5 +27,8 @@ const Property = sequelize.define('Product', {
 (async function () {
     await Property.sync({ alter: true });
 })();
+
+// User.hasMany(Property);
+// Property.belongsTo(User);
 
 export { Property }
