@@ -31,25 +31,16 @@ export const OperationRoutes = [
         path: "/setProfile",
         handler: (request, h) => {
             const { user } = request
-            const { file } = request.payload;
-            return UserOperations.set_profile_pic(user, file, request, h);
+            return UserOperations.set_profile_pic(user, request, h);
         },
-        // config: {
-        //     validate: {
-        //         headers: {
-        //             'accept': Hapi.types.accept('multipart / form-data', 'application/json') // Define the accepted content types here
-        //         }
-        //     }
-        // },
         options: {
             auth: 'user',
             payload: {
-                maxBytes: 100000000,
+                output: 'stream',
                 parse: true,
-                allow: "multipart/form-data",
-                timeout: false,
-                output: "file"
-            },
+                allow: 'multipart/form-data',
+                multipart: true
+            }
         },
     }
 ]
