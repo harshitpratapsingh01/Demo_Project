@@ -1,4 +1,4 @@
-import Session from "../models/model.session";
+import { Session } from "../models/model.session";
 import { Redis } from "../middleware/redis/redis.session";
 
 export class Sessions {

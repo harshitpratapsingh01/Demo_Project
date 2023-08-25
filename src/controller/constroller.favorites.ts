@@ -1,4 +1,4 @@
-import Favorites from "../models/user.favourites";
+import { Favorites } from "../models/user.favourites";
 import { Property } from "../models/schema.property";
 import { User } from "../models/DbSchema";
 

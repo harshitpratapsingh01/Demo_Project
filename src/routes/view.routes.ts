@@ -80,5 +80,46 @@ export const ViewRoutes = [
         handler: (request, h) => {
             return h.view('contact');
         }
-    }
+    },
+    {
+        method: "GET",
+        path: '/addProperty',
+        handler: (request,h) => {
+            return h.view('addProperty');
+        }
+    },
+    {
+        method: "GET",
+        path: '/PropertyImages',
+        handler: (request,h) => {
+            try {
+                const propertyDetails = JSON.parse(request.query.property);
+                if (propertyDetails) {
+                    return h.view('PropertyImages', { property: propertyDetails });
+                }
+                return h.view('PropertyImages');
+            } catch (err) {
+                console.error(err);
+                return h.view('PropertyImages');
+            }
+        }
+    },
+    {
+        method: "GET",
+        path: "/property-list1",
+        handler: (request, h) => {
+            // return h.view('property-list');
+            try {
+                const propertyDetails = JSON.parse(request.query.property);
+                console.log(propertyDetails);
+                if (propertyDetails) {
+                    return h.view('property-list', { property: propertyDetails });
+                }
+                return h.view('property-list');
+            } catch (err) {
+                console.error(err);
+                return h.view('property-list');
+            }
+        }
+    },
 ]

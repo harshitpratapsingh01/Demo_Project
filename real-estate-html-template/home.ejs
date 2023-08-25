@@ -70,10 +70,11 @@
                         </div>
                         <a href="./contact" class="nav-item nav-link">Contact</a>
                         <% if (user) { %>
-                            <a href="./getprofile" class="nav-item nav-link" id="display-user-details">Welcome, <%= user.username %></a>
+                            <a href="./getprofile" class="nav-item nav-link" id="display-user-details">Welcome, <%=
+                                    user.username %></a>
                             <% } %>
                     </div>
-                    <a href="" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
+                    <a href="./addProperty" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
 
                 </div>
             </nav>
@@ -106,34 +107,56 @@
         <!-- Search Start -->
         <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
             <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Property Type</option>
-                                    <option value="1">Property Type 1</option>
-                                    <option value="2">Property Type 2</option>
-                                    <option value="3">Property Type 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Location</option>
-                                    <option value="1">Location 1</option>
-                                    <option value="2">Location 2</option>
-                                    <option value="3">Location 3</option>
-                                </select>
+                <form action="/searchProperty" method="POST">
+                    <div class="row g-2">
+                        <div class="col-md-10">
+                            <div class="row g-2">
+                                <div class="col-md-4">
+                                    <select class="form-select border-0 py-3" name="property_type">
+                                        <option selected>Property Type</option>
+                                        <option value="Apartment">Apartment</option>
+                                        <option value="Villa">Villa</option>
+                                        <option value="Home">Home</option>
+                                        <option value="Office">Office</option>
+                                        <option value="Shop">Shop</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select border-0 py-3" name="city">
+                                        <option selected>Location</option>
+                                        <option value="Gurgaon">Gurgaon</option>
+                                        <option value="Chennai">Chennai</option>
+                                        <option value="Mumbai">Mumbai</option>
+                                        <option value="Bangalore">Bangalore</option>
+                                        <option value="Pune">Pune</option>
+                                        <option value="Hyderabad">Hyderabad</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="Noida">Noida</option>
+                                        <option value="Greater_Noida">Greater_Noida</option>
+                                        <option value="Ghaziabad">Ghaziabad</option>
+                                        <option value="Fariadabad">Fariadabad</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select border-0 py-3" name="featured">
+                                        <option selected>Featured</option>
+                                        <option value="For Sell">For Sell</option>
+                                        <option value="For Rent">For Rent</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-dark border-0 w-100 py-3" type="submit"
+                                id="searchButton">Search</button>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100 py-3">Search</button>
-                    </div>
-                </div>
+                </form>
+                <script>
+                    document.getElementById("searchButton").addEventListener("click", function () {
+                        window.location.href = "./property-list1";
+                    });
+                </script>
             </div>
         </div>
         <!-- Search End -->
@@ -155,7 +178,7 @@
                                     <img class="img-fluid" src="static/img/icon-apartment.png" alt="Icon">
                                 </div>
                                 <h6>Apartment</h6>
-                                <span>123 Properties</span>
+                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
@@ -166,7 +189,7 @@
                                     <img class="img-fluid" src="static/img/icon-villa.png" alt="Icon">
                                 </div>
                                 <h6>Villa</h6>
-                                <span>123 Properties</span>
+                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
@@ -177,7 +200,7 @@
                                     <img class="img-fluid" src="static/img/icon-house.png" alt="Icon">
                                 </div>
                                 <h6>Home</h6>
-                                <span>123 Properties</span>
+                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
@@ -188,29 +211,7 @@
                                     <img class="img-fluid" src="static/img/icon-housing.png" alt="Icon">
                                 </div>
                                 <h6>Office</h6>
-                                <span>123 Properties</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
-                            <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="static/img/icon-building.png" alt="Icon">
-                                </div>
-                                <h6>Building</h6>
-                                <span>123 Properties</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
-                            <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="static/img/icon-neighborhood.png" alt="Icon">
-                                </div>
-                                <h6>Townhouse</h6>
-                                <span>123 Properties</span>
+                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
@@ -221,18 +222,7 @@
                                     <img class="img-fluid" src="static/img/icon-condominium.png" alt="Icon">
                                 </div>
                                 <h6>Shop</h6>
-                                <span>123 Properties</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
-                            <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="static/img/icon-luxury.png" alt="Icon">
-                                </div>
-                                <h6>Garage</h6>
-                                <span>123 Properties</span>
+                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
@@ -278,7 +268,7 @@
                                 ipsum sit eirmod sit diam justo sed rebum.</p>
                         </div>
                     </div>
-                    <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                    <!-- <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                         <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
                             <li class="nav-item me-2">
                                 <a class="btn btn-outline-primary active" data-bs-toggle="pill"
@@ -291,7 +281,7 @@
                                 <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane fade show p-0 active">

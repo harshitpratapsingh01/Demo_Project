@@ -15,14 +15,19 @@ export const PropertyRoutes = [
     },
     {
         method: "POST",
-        path: "/propertyImages",
-        options: {
-            auth: 'user'
-        },
+        path: "/propertyImages/{id}",
         handler: (request, h) => {
-            const { user } = request;
-            const file = upload.array('images', 10);
+            const { user } = request
             return Propertys.setPropertyImages(user, request, h);
+        },
+        options: {
+            auth: 'user',
+            payload: {
+                output: 'stream',
+                parse: true,
+                allow: 'multipart/form-data',
+                multipart: true
+            }
         }
     },
     {
@@ -32,7 +37,7 @@ export const PropertyRoutes = [
             auth: 'user'
         },
         handler: (request, h) => {
-            const {user} = request;
+            const { user } = request;
             const propertyId = request.params.id;
             return Propertys.deleteProperty(user, propertyId, h);
         }
@@ -44,8 +49,8 @@ export const PropertyRoutes = [
             auth: 'user'
         },
         handler: (request, h) => {
-            const {user} = request;
-            return Propertys.getAllPropertys(user,h);
+            const { user } = request;
+            return Propertys.getAllPropertys(user, h);
         }
     },
     {
@@ -54,10 +59,10 @@ export const PropertyRoutes = [
         options: {
             auth: 'user'
         },
-        handler: (request,h) => {
-            const {user} = request;
+        handler: (request, h) => {
+            const { user } = request;
             const details = request.payload;
-            return Propertys.searchProperty(user,details,h);
+            return Propertys.searchProperty(user, details, h);
         }
     },
 
@@ -67,10 +72,10 @@ export const PropertyRoutes = [
         options: {
             auth: 'user'
         },
-        handler: (request,h) => {
-            const {user} = request;
+        handler: (request, h) => {
+            const { user } = request;
             const property_id = request.params.id;
-            return Propertys.buyProperty(user,property_id,h);
+            return Propertys.buyProperty(user, property_id, h);
         }
     }
 

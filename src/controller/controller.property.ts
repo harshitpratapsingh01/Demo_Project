@@ -3,6 +3,7 @@ import { Validate } from "../middleware/user.validation";
 import { User } from "../models/DbSchema";
 import fs from "fs";
 import { request } from "http";
+import { Redis } from "../middleware/redis/redis.session";
 const { Op } = require("sequelize");
 
 export class Propertys {
@@ -12,6 +13,12 @@ export class Propertys {
             if (!isUser) {
                 return h.response({ message: "User not found" }).code(404);
             }
+            const status = await Redis.isActiv(isUser);
+            if (!status) {
+                return h.response({ message: "Please Login First" }).code(400);
+            }
+
+
             const point = {
                 type: 'Point',
                 coordinates: [Details.longitude, Details.latitude]
@@ -22,6 +29,7 @@ export class Propertys {
                 sqrmeter: Details.sqrmeter,
                 price: Details.price,
                 seller_id: isUser.id,
+                featured: Details.featured,
                 house_no: Details.house_no,
                 street: Details.street,
                 area: Details.area,
@@ -36,37 +44,54 @@ export class Propertys {
             if (!property) {
                 return h.response("Something went wrong").code(400);
             }
-            return h.response({ message: "success", property }).code(201);
+            // return h.response({ message: "success", property }).code(201);
+            const queryParams = new URLSearchParams({ property: JSON.stringify(property) });
+            return h.redirect('/PropertyImages?' + queryParams.toString());
         }
         catch (error) {
+            console.log(error);
             return h.response("Internal Server error").code(500);
         }
     }
 
     static async setPropertyImages(user, request, h) {
         try {
+            if (!user) {
+                return h.response({ message: "User Not Found" }).code(404);
+            }
+
             const isUser: any = await User.findOne({ where: { email: user.email } });
-            if (!isUser) {
-                return h.response({ message: "User Not Found" });
+            const propertyId = request.params.id;
+            const data: any = request.payload;
+
+            if (!data.file) {
+                return h.response({ message: "No file provided" }).code(400);
             }
-            const isProperty: any = await Property.findOne({ where: { seller_id: isUser.id } });
-            if (isProperty) {
-                const files = request.files;
-                const bufferDataArray = [];
-                for (let file in files) {
-                    const fileData = fs.readFileSync(files[file].path);
-                    const bufferData = Buffer.from(fileData);
-                    bufferDataArray.push(bufferData);
-                }
-                const property = await Property.update({ images: bufferDataArray }, { where: { [Op.and]: { seller_id: isUser.id, id: isProperty.id } } })
-                if (property[0] == 0) {
-                    return h.response({ message: "Something went wrong" }).code(400);
-                }
-                return h.response({ message: "Images added Successfully" }).code(200);
-            }
-        }
-        catch (err) {
-            return h.response({ message: "Internal Server error", err }).code(500);
+            const name = data.file.hapi.filename;
+            const path = `${process.cwd()}/real-estate-html-template/img/` + name;
+            const file = fs.createWriteStream(path);
+            data.file.pipe(file);
+
+            return new Promise((resolve, reject) => {
+                file.on('finish', async () => {
+                    try {
+                        const property = await Property.update({ images: [name] }, { where: { [Op.and]: { seller_id: isUser.id, id: propertyId } } });
+                        resolve(h.response({ message: "Images uploaded successfully" }).code(200));
+                        // resolve(h.view('displayDetails', { user: isUser }));
+                    } catch (err) {
+                        console.error(err);
+                        reject(h.response({ message: "Error updating profilePic" }).code(500));
+                    }
+                });
+
+                file.on('error', (err) => {
+                    console.error(err);
+                    reject(h.response({ message: "Error writing file" }).code(500));
+                });
+            });
+        } catch (err) {
+            console.log(err);
+            return h.response({ message: "Error" }).code(500);
         }
     }
 
@@ -116,12 +141,21 @@ export class Propertys {
             if (!isUser) {
                 return h.response({ message: "User not Found" }).code(404);
             }
-            const property = await Property.findAll({ where: { [Op.or]: { city: details.city, area: details.area } } });
+
+            const status = await Redis.isActiv(isUser);
+            if (!status) {
+                return h.response({ message: "Please Login First" }).code(400);
+            }
+
+            const property = await Property.findAll({ where: { [Op.and]: { city: details.city, featured: details.featured, property_type: details.property_type } } });
             if (!property) {
                 return h.response({ message: "No property found at this location" }).code(404);
             }
             else {
-                return h.response({ message: "Listed Property's are: ", property }).code(200);
+                // return h.response({ message: "Listed Property's are: ", property }).code(200);
+                const queryParams = new URLSearchParams({ property: JSON.stringify(property) });
+                // return h.redirect('/PropertyImages?' + queryParams.toString());
+                return h.redirect('/property-list1?' + queryParams.toString())
             }
         }
         catch (err) {
@@ -153,5 +187,7 @@ export class Propertys {
 }
 
 
+// 28.609623, 77.354741
 
 
+// const property = await Property.update({ images: bufferDataArray }, { where: { [Op.and]: { seller_id: isUser.id, id: isProperty.id } } })

@@ -6,6 +6,7 @@ import plugin from "./src/middleware/userAuth";
 import inert from "@hapi/inert";
 import vision from "@hapi/vision";
 import path from "path";
+import { syncmodels } from "./src/models/index.models";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ class Init {
         });
 
         await Connection.dbconnection();
+        // await syncmodels();
         await server.register(plugin);
         await server.register([vision, inert]);
 
