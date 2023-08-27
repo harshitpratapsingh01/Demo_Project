@@ -24,7 +24,7 @@ export class UserOnborading {
                 console.log(users);
                 // const successMessage = 'Registration successful! You can now log in.';
                 // return h.response({ status: "SignUp Success" }).code(201);
-                return h.redirect('/login');
+                return h.redirect('/message');
             }
             else {
                 return h.response({ status: "Username Already Exist" }).code(409);
@@ -77,7 +77,8 @@ export class UserOnborading {
                 const user = isUser.id;
                 if (Sessions.update_session(user)) {
                     await Redis.logout_session_redis(isUser);
-                    return h.response({ message: "User Logout Successfully" }).code(200);
+                    // return h.response({ message: "User Logout Successfully" }).code(200);
+                    return h.redirect('/');
                 }
                 else {
                     return h.response({ message: "Session not found" }).code(404);

@@ -15,7 +15,8 @@ export class UserOperations {
                     return h.view('displayDetails', { user: isUser });
                 }
                 else {
-                    return h.response({ message: "please login first" }).code(400);
+                    // return h.response({ message: "please login first" }).code(400);
+                    return h.view('message2')
                 }
             }
             else {

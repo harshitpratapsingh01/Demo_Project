@@ -151,8 +151,8 @@
     <div class="container center">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="white">Custom File Upload</h1>
-                <p class="white">In this example, submit is allowed only in case the user uploads a valid image file.
+                <h1 class="white">Upload Your Property Images</h1>
+                <p class="white">Submit is allowed only in case the user uploads a valid image file.
                 </p>
             </div>
         </div>
@@ -185,6 +185,11 @@
                     </div>
                 </div>
             </form>
+            <script>
+                document.getElementById("fakebtn").addEventListener("click", function() {
+                    window.location.href = "./message1";
+                });
+            </script>
         <% } %>
     </div>
 
@@ -224,7 +229,6 @@
                 $("#fakebtn").hide();
             }
         });
-//# sourceURL=pen.js
     </script>
 
 

@@ -47,7 +47,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="./home?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="navbar-brand d-flex align-items-center text-center">
+                <a href="/" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="static/img/icon-deal.png" alt="Icon"
                             style="width: 30px; height: 30px;">
@@ -59,20 +59,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="./home?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">Home</a>
-                        <a href="./about?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">About</a>
+                        <a href="/" class="nav-item nav-link">Home</a>
+                        <a href="./about1" class="nav-item nav-link">About</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="./getAllPropertys?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="dropdown-item active">Property List</a>
-                                <a href="./property-type?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="dropdown-item">Property Type</a>
+                                <a href="./getAllPropertys" class="dropdown-item active">Property List</a>
+                                <a href="./property-type1" class="dropdown-item">Property Type</a>
                             </div>
                         </div>
-                        <a href="./contact?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">Contact</a>
-                        <% if (user) { %>
-                            <a href="./getprofile" class="nav-item nav-link" id="display-user-details">Welcome, <%=
-                                    user.name%></a>
-                            <% } %>
+                        <a href="./contact1" class="nav-item nav-link">Contact</a>
                     </div>
                     <a href="./getUserProperty" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
                 </div>
@@ -150,11 +146,6 @@
                         </div>
                     </div>
                 </form>
-                <script>
-                    document.getElementById("searchButton").addEventListener("click", function () {
-                        window.location.href = "./property-list1?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>";
-                    });
-                </script>
             </div>
         </div>
         <!-- Search End -->

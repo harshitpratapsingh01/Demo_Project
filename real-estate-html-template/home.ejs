@@ -47,7 +47,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="./home" class="navbar-brand d-flex align-items-center text-center">
+                <a href="" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="static/img/icon-deal.png" alt="Icon"
                             style="width: 30px; height: 30px;">
@@ -59,23 +59,22 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="./home" class="nav-item nav-link active">Home</a>
-                        <a href="./about" class="nav-item nav-link">About</a>
+                        <a href="" class="nav-item nav-link active">Home</a>
+                        <a href="./about?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">About</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="./property-list" class="dropdown-item">Property List</a>
-                                <a href="./property-type" class="dropdown-item">Property Type</a>
+                                <a href="./getAllPropertys?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="dropdown-item">Property List</a>
+                                <a href="./property-type?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="dropdown-item">Property Type</a>
                             </div>
                         </div>
-                        <a href="./contact" class="nav-item nav-link">Contact</a>
+                        <a href="./contact?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">Contact</a>
                         <% if (user) { %>
                             <a href="./getprofile" class="nav-item nav-link" id="display-user-details">Welcome, <%=
-                                    user.username %></a>
+                                    user.name%></a>
                             <% } %>
                     </div>
-                    <a href="./addProperty" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
-
+                    <a href="./getUserProperty" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
                 </div>
             </nav>
         </div>
@@ -154,7 +153,7 @@
                 </form>
                 <script>
                     document.getElementById("searchButton").addEventListener("click", function () {
-                        window.location.href = "./property-list1";
+                        window.location.href = "./property-list1?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>";
                     });
                 </script>
             </div>
@@ -172,57 +171,52 @@
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="./getPropertyTypes1">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="static/img/icon-apartment.png" alt="Icon">
                                 </div>
                                 <h6>Apartment</h6>
-                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="./getPropertyTypes2">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="static/img/icon-villa.png" alt="Icon">
                                 </div>
                                 <h6>Villa</h6>
-                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="./getPropertyTypes3">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="static/img/icon-house.png" alt="Icon">
                                 </div>
                                 <h6>Home</h6>
-                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="./getPropertyTypes4">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="static/img/icon-housing.png" alt="Icon">
                                 </div>
                                 <h6>Office</h6>
-                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="./getPropertyTypes5">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="static/img/icon-condominium.png" alt="Icon">
                                 </div>
                                 <h6>Shop</h6>
-                                <!-- <span>123 Properties</span> -->
                             </div>
                         </a>
                     </div>
@@ -268,20 +262,6 @@
                                 ipsum sit eirmod sit diam justo sed rebum.</p>
                         </div>
                     </div>
-                    <!-- <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                        <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                            <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary active" data-bs-toggle="pill"
-                                    href="#tab-1">Featured</a>
-                            </li>
-                            <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">For Sell</a>
-                            </li>
-                            <li class="nav-item me-0">
-                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
-                            </li>
-                        </ul>
-                    </div> -->
                 </div>
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane fade show p-0 active">
@@ -802,7 +782,7 @@
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Get In Touch</h5>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Sector 58, Noida, India</p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
                         <div class="d-flex pt-2">

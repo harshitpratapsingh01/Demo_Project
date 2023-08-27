@@ -37,6 +37,7 @@ export const OperationRoutes = [
             auth: 'user',
             payload: {
                 output: 'stream',
+                maxBytes: 5000000,
                 parse: true,
                 allow: 'multipart/form-data',
                 multipart: true

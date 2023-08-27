@@ -43,7 +43,7 @@ const UserRoutes = [
         }
     },
     {
-        method: 'POST',
+        method: 'GET',
         path: '/logout',
         options: {
             auth: 'user'

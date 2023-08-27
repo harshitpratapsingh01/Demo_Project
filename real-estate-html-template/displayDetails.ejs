@@ -47,7 +47,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="./home" class="navbar-brand d-flex align-items-center text-center">
+                <a href="./home?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="static/img/icon-deal.png" alt="Icon"
                             style="width: 30px; height: 30px;">
@@ -59,22 +59,21 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="./home" class="nav-item nav-link active">Home</a>
-                        <a href="./about" class="nav-item nav-link">About</a>
+                        <a href="./home?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link active">Home</a>
+                        <a href="./about?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">About</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="./property-list" class="dropdown-item">Property List</a>
-                                <a href="./property-type" class="dropdown-item">Property Type</a>
+                                <a href="./getAllPropertys?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="dropdown-item">Property List</a>
+                                <a href="./property-type?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="dropdown-item">Property Type</a>
                             </div>
                         </div>
-                        <a href="./contact" class="nav-item nav-link">Contact</a>
+                        <a href="./contact?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">Contact</a>
                         <% if (user) { %>
-                            <a href="" class="nav-item nav-link">Welcome, <%= user.username %></a>
+                            <a href="" class="nav-item nav-link">Welcome, <%= user.name %></a>
                             <% } %>
                     </div>
-                    <a href="" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
-
+                    <!-- <a href="" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a> -->
                 </div>
             </nav>
         </div>
@@ -106,11 +105,12 @@
                                                         enctype="multipart/form-data">
                                                         <input type="file" name="file" accept="image/*" required>
                                                         <button type="submit" value="Upload" id="imageUpload" style="
-                                                        color: black;
-                                                        border: none;
+                                                        color: white;
                                                         padding: 10px 20px;
-                                                        border-radius: 3px;
-                                                        cursor: pointer;">Update</button>
+                                                        border-radius: 5px;
+                                                        cursor: pointer;
+                                                        background-color: #00B98E;
+                                                        border-color: #00B98E;">Update</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -122,23 +122,44 @@
                                                             <input type="file" name="file" accept="image/*" required>
                                                             <button type="submit" value="Upload" 
                                                                 id="imageUpload" style="
-                                                                color: black;
-                                                                border: none;
+                                                                color: white;
                                                                 padding: 10px 20px;
-                                                                border-radius: 3px;
-                                                                cursor: pointer;">Upload</button>
+                                                                border-radius: 5px;
+                                                                cursor: pointer;
+                                                                background-color: #00B98E;
+                                                                border-color: #00B98E;">Upload</button>
                                                         </form>
                                                     </div>
                                         <% } %>
-                                            <p>Username: <%= user.username %>
+                                            <p style="font-size: 20px;
+                                            margin-left: 10px;
+                                            color: #20c997;
+                                            text-align: center;
+                                            padding-top: 15px;
+                                            font-weight: bold;">Username: <%= user.username %>
                                             </p>
-                                            <p>Name: <%= user.name %>
+                                            <p style="font-size: 20px;
+                                            margin-left: 10px;
+                                            color: #20c997;
+                                            text-align: center;
+                                            padding-top: 15px;
+                                            font-weight: bold;">Name: <%= user.name %>
                                             </p>
-                                            <p>Email: <%= user.email %>
+                                            <p style="font-size: 20px;
+                                            margin-left: 10px;
+                                            color: #20c997;
+                                            text-align: center;
+                                            padding-top: 15px;
+                                            font-weight: bold;">Email: <%= user.email %>
                                             </p>
-                                            <p>Mobile Number: <%= user.mobile_no %>
+                                            <p style="font-size: 20px;
+                                            margin-left: 10px;
+                                            color: #20c997;
+                                            text-align: center;
+                                            padding-top: 15px;
+                                            font-weight: bold;">Mobile Number: <%= user.mobile_no %>
                                             </p>
-                                        <% } %>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -146,10 +167,19 @@
                 </div>
             </div>
         </div>
+        <div>
+            <button style="font-weight: bold;
+            font-size: 20px;" class="btn btn-dark border-0 w-100 py-3" type="submit"
+            id="logoutButton">Logout</button>
+        </div>
 
         <script>
             document.getElementById("imageUpload").addEventListener("click", function() {
                 window.location.href = "";
+            });
+
+            document.getElementById("logoutButton").addEventListener("click", function() {
+                window.location.href = "./logout";
             });
         </script>
 
@@ -160,7 +190,7 @@
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Get In Touch</h5>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Sector 58, Noida, India</p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
                         <div class="d-flex pt-2">

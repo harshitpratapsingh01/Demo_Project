@@ -24,6 +24,7 @@ export const PropertyRoutes = [
             auth: 'user',
             payload: {
                 output: 'stream',
+                maxBytes: 5000000,
                 parse: true,
                 allow: 'multipart/form-data',
                 multipart: true
@@ -54,6 +55,72 @@ export const PropertyRoutes = [
         }
     },
     {
+        method: "GET",
+        path: '/getUserProperty',
+        options: {
+            auth: 'user'
+        },
+        handler: (request, h) => {
+            const {user} = request;
+            return Propertys.getUserPropertys(user,h);
+        }
+    },
+    {
+        method: "GET",
+        path: '/getPropertyTypes1',
+        options: {
+            auth: 'user'
+        },
+        handler: (request, h) => {
+            const {user} = request;
+            return Propertys.getPropertysByType1(user, h);
+        }
+    },
+    {
+        method: "GET",
+        path: '/getPropertyTypes2',
+        options: {
+            auth: 'user'
+        },
+        handler: (request, h) => {
+            const {user} = request;
+            return Propertys.getPropertysByType2(user, h);
+        }
+    },
+    {
+        method: "GET",
+        path: '/getPropertyTypes3',
+        options: {
+            auth: 'user'
+        },
+        handler: (request, h) => {
+            const {user} = request;
+            return Propertys.getPropertysByType3(user, h);
+        }
+    },
+    {
+        method: "GET",
+        path: '/getPropertyTypes4',
+        options: {
+            auth: 'user'
+        },
+        handler: (request, h) => {
+            const {user} = request;
+            return Propertys.getPropertysByType4(user, h);
+        }
+    },
+    {
+        method: "GET",
+        path: '/getPropertyTypes5',
+        options: {
+            auth: 'user'
+        },
+        handler: (request, h) => {
+            const {user} = request;
+            return Propertys.getPropertysByType5(user, h);
+        }
+    },
+    {
         method: "POST",
         path: "/searchProperty",
         options: {
@@ -67,7 +134,7 @@ export const PropertyRoutes = [
     },
 
     {
-        method: "POST",
+        method: "GET",
         path: "/addBuyer/{id}",
         options: {
             auth: 'user'
@@ -76,6 +143,18 @@ export const PropertyRoutes = [
             const { user } = request;
             const property_id = request.params.id;
             return Propertys.buyProperty(user, property_id, h);
+        }
+    },
+    {
+        method: "GET",
+        path: "/PropertyDetails",
+        options: {
+            auth: 'user'
+        },
+        handler: (request,h) => {
+            const {user} = request;
+            const property = JSON.parse(request.query.property);
+            return Propertys.getPropertyDetails(user,property,h);
         }
     }
 
