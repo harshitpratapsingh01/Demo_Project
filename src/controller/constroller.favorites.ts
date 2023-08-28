@@ -1,7 +1,7 @@
 import { Favorites } from "../models/user.favourites";
 import { Property } from "../models/schema.property";
 import { User } from "../models/DbSchema";
-
+import { Redis } from "../middleware/redis/redis.session";
 export class Favorite{
     static async addToFavorites(user,property_id,h){
         try{
@@ -9,6 +9,12 @@ export class Favorite{
             if(!isUser){
                 return h.response({message: "User Not Found"}).code(404);
             }
+            const status = await Redis.isActiv(isUser);
+            if (!status) {
+                // return h.response({ message: "Please Login First" }).code(400);
+                return h.view('message2');
+            }
+
             const favorite_details = ({
                 property_id: property_id,
                 user_id: isUser.id
@@ -29,12 +35,18 @@ export class Favorite{
             if(!isUser){
                 return h.response({message: "User not Found"}).code(404);
             }
-            const propertys = await Favorites.findAll({where: {user_id: isUser.id}});
+            const propertys: any = await Favorites.findAll({where: {user_id: isUser.id}});
+            const propertyDetails = [];
+            for(let i = 0; i<propertys.length; i++){
+                const details = await Property.findOne({where: {id: propertys[i].property_id}})
+                propertyDetails.push(details);
+            }
             if(!propertys){
                 return h.response({message: "No Property found at Favorites"}).code(404);
             }
             else{
-                return h.response({message: "Favorites Property's are: ", propertys});
+                // return h.response({message: "Favorites Property's are: ", propertys, propertyDetails});
+                return h.view('displayFavorite', {user: isUser, property: propertyDetails})
             }
         }
         catch(err){

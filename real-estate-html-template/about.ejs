@@ -71,6 +71,7 @@
                                     user.name%></a>
                             <% } %>
                     </div>
+                    <a href="./getFavorites?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">Wishlist</a>
                     <a href="./getUserProperty" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
                 </div>
             </nav>

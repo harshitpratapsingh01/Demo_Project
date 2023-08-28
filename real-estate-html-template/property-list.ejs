@@ -74,6 +74,7 @@
                                     user.name%></a>
                             <% } %>
                     </div>
+                    <a href="./getFavorites?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">Wishlist</a>
                     <a href="./getUserProperty" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a>
                 </div>
             </nav>
@@ -194,9 +195,27 @@
                                                     </div>
                                                 </div>
                                                 <div class="p-4 pb-0">
-                                                    <h5 class="text-primary mb-3">
+                                                    <!-- <h5 class="text-primary mb-3">
                                                         <%= property[i].price %>
-                                                    </h5>
+                                                    </h5> -->
+                                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                        <h5 class="text-primary mb-3"><%= property[i].price %></h5>
+                                                        <a href="./addToFavorite/<%= property[i].id %>" style="background-color: #f8f8f8;
+                                                        color: #e74c3c;
+                                                        border: none;
+                                                        padding: 10px 20px;
+                                                        border-radius: 5px;
+                                                        cursor: pointer;
+                                                        font-size: 16px;
+                                                        transition: background-color 0.3s ease;
+                                                        float: right;
+                                                        text-decoration: none;" onmouseover="this.style.backgroundColor='#e74c3c'; 
+                                                        this.style.color='#fff';"
+                                                        onmouseout="this.style.backgroundColor='#f8f8f8'; 
+                                                        this.style.color='#e74c3c';">
+                                                            <i style="margin-right: 5px;" class="fas fa-heart"></i> Add to Wishlist
+                                                        </a>
+                                                    </div>
                                                     <a class="d-block h5 mb-2" href="">
                                                         <%= property[i].description %>
                                                     </a>

@@ -343,7 +343,6 @@ export class Propertys {
 
     static async getPropertyDetails(user, property, h){
         try{
-            console.log(property);
             const isUser = await User.findOne({where: {email: user.email}});
             if(!isUser){
                 return h.response({ message: "User not Found" }).code(404);
@@ -355,7 +354,6 @@ export class Propertys {
                 return h.view('message2');
             }
             const owner = await User.findOne({where: {id: property.seller_id}});
-            console.log(owner);
 
             return h.view('displayPropertyDetails', {PropertyDetails: property, user: isUser, owner: owner})
         }
