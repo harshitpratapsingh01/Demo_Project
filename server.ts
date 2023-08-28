@@ -18,7 +18,7 @@ class Init {
         });
 
         await Connection.dbconnection();
-        // await syncmodels();
+        await syncmodels();
         await server.register(plugin);
         await server.register([vision, inert]);
 
