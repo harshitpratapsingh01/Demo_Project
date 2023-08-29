@@ -179,6 +179,7 @@
                             <div class="row g-4">
                                 <% for (let i=0; i < property.length; i++) { %>
                                     <% const delay=i * 0.1 + 0.1; %>
+                                    <% if(property[i].seller_id != user.id) { %> 
                                         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="<%= delay %>s">
                                             <div class="property-item rounded overflow-hidden">
                                                 <div class="position-relative overflow-hidden">
@@ -240,6 +241,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    <% } %>
                                 <% } %>
                                 <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
                                     <a class="btn btn-primary py-3 px-5" href="">Browse More Property</a>

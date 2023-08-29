@@ -5,6 +5,7 @@ import fs from "fs";
 import { request } from "http";
 import { Redis } from "../middleware/redis/redis.session";
 const { Op } = require("sequelize");
+import { BuyRequest } from "./controller.request";
 
 export class Propertys {
     static async addProperty(user, Details, h) {
@@ -132,10 +133,10 @@ export class Propertys {
                 return h.response({ message: "No property Found" }).code(404);
             }
             if (!status) {
-                return h.view('property-list1', {property: All_propertys});
+                return h.view('property-list1', { property: All_propertys });
             }
             // return h.response({ message: "All Property's: ", All_propertys });
-            return h.view('property-list', {property: All_propertys, user: isUser});
+            return h.view('property-list', { property: All_propertys, user: isUser });
         }
         catch (err) {
             console.log(err);
@@ -154,12 +155,12 @@ export class Propertys {
                 // return h.response({ message: "Please Login First" }).code(400);
                 return h.view('message2');
             }
-            const All_propertys = await Property.findAll({where: {seller_id: isUser.id}});
+            const All_propertys = await Property.findAll({ where: { seller_id: isUser.id } });
             if (!All_propertys) {
                 return h.response({ message: "No property Found" }).code(404);
             }
             // return h.response({ message: "All Property's: ", All_propertys });
-            return h.view('property', {property: All_propertys, user: isUser});
+            return h.view('property', { property: All_propertys, user: isUser });
         }
         catch (err) {
             console.log(err);
@@ -174,15 +175,15 @@ export class Propertys {
                 return h.response({ message: "User not Found" }).code(404);
             }
             const status = await Redis.isActiv(isUser);
-            const All_propertys = await Property.findAll({where: {property_type: "Apartment"}});
+            const All_propertys = await Property.findAll({ where: { property_type: "Apartment" } });
             if (!All_propertys) {
                 return h.response({ message: "No property Found" }).code(404);
             }
             // return h.response({ message: "All Property's: ", All_propertys });
             if (!status) {
-                return h.view('property-list1', {property: All_propertys});
+                return h.view('property-list1', { property: All_propertys });
             }
-            return h.view('property-list', {property: All_propertys, user: isUser});
+            return h.view('property-list', { property: All_propertys, user: isUser });
         }
         catch (err) {
             console.log(err);
@@ -197,15 +198,15 @@ export class Propertys {
                 return h.response({ message: "User not Found" }).code(404);
             }
             const status = await Redis.isActiv(isUser);
-            const All_propertys = await Property.findAll({where: {property_type: "Villa"}});
+            const All_propertys = await Property.findAll({ where: { property_type: "Villa" } });
             if (!All_propertys) {
                 return h.response({ message: "No property Found" }).code(404);
             }
             // return h.response({ message: "All Property's: ", All_propertys });
             if (!status) {
-                return h.view('property-list1', {property: All_propertys});
+                return h.view('property-list1', { property: All_propertys });
             }
-            return h.view('property-list', {property: All_propertys, user: isUser});
+            return h.view('property-list', { property: All_propertys, user: isUser });
         }
         catch (err) {
             console.log(err);
@@ -220,15 +221,15 @@ export class Propertys {
                 return h.response({ message: "User not Found" }).code(404);
             }
             const status = await Redis.isActiv(isUser);
-            const All_propertys = await Property.findAll({where: {property_type: "Home"}});
+            const All_propertys = await Property.findAll({ where: { property_type: "Home" } });
             if (!All_propertys) {
                 return h.response({ message: "No property Found" }).code(404);
             }
             // return h.response({ message: "All Property's: ", All_propertys });
             if (!status) {
-                return h.view('property-list1', {property: All_propertys});
+                return h.view('property-list1', { property: All_propertys });
             }
-            return h.view('property-list', {property: All_propertys, user: isUser});
+            return h.view('property-list', { property: All_propertys, user: isUser });
         }
         catch (err) {
             console.log(err);
@@ -243,15 +244,15 @@ export class Propertys {
                 return h.response({ message: "User not Found" }).code(404);
             }
             const status = await Redis.isActiv(isUser);
-            const All_propertys = await Property.findAll({where: {property_type: "Office"}});
+            const All_propertys = await Property.findAll({ where: { property_type: "Office" } });
             if (!All_propertys) {
                 return h.response({ message: "No property Found" }).code(404);
             }
             // return h.response({ message: "All Property's: ", All_propertys });
             if (!status) {
-                return h.view('property-list1', {property: All_propertys});
+                return h.view('property-list1', { property: All_propertys });
             }
-            return h.view('property-list', {property: All_propertys, user: isUser});
+            return h.view('property-list', { property: All_propertys, user: isUser });
         }
         catch (err) {
             console.log(err);
@@ -266,15 +267,15 @@ export class Propertys {
                 return h.response({ message: "User not Found" }).code(404);
             }
             const status = await Redis.isActiv(isUser);
-            const All_propertys = await Property.findAll({where: {property_type: "Shop"}});
+            const All_propertys = await Property.findAll({ where: { property_type: "Shop" } });
             if (!All_propertys) {
                 return h.response({ message: "No property Found" }).code(404);
             }
             // return h.response({ message: "All Property's: ", All_propertys });
             if (!status) {
-                return h.view('property-list1', {property: All_propertys});
+                return h.view('property-list1', { property: All_propertys });
             }
-            return h.view('property-list', {property: All_propertys, user: isUser});
+            return h.view('property-list', { property: All_propertys, user: isUser });
         }
         catch (err) {
             console.log(err);
@@ -302,7 +303,7 @@ export class Propertys {
             else {
                 // return h.response({ message: "Listed Property's are: ", property }).code(200);
                 const queryParams = new URLSearchParams({ property: JSON.stringify(property) });
-                const queryParams1 = new URLSearchParams({isUser: JSON.stringify(isUser)})
+                const queryParams1 = new URLSearchParams({ isUser: JSON.stringify(isUser) })
                 // return h.redirect('/PropertyImages?' + queryParams.toString());
                 return h.redirect('/property-list1?' + queryParams.toString() + '&' + queryParams1.toString())
             }
@@ -323,6 +324,8 @@ export class Propertys {
             if (!status) {
                 return h.response({ message: "Please Login First" }).code(400);
             }
+
+
             const buyer = await Property.update(
                 { BuyerId: isUser.id, property_status: "SOLD OUT" },
                 { where: { id: property_id } });
@@ -332,6 +335,8 @@ export class Propertys {
             }
             // return h.response({ message: "Property Sold Successfully" });
             // return h.view('message3', {user: isUser});
+            await BuyRequest.property_buy_request(isUser, property_id);
+
             const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
             return h.redirect('/message3?' + queryParams.toString());
         }
@@ -341,10 +346,10 @@ export class Propertys {
         }
     }
 
-    static async getPropertyDetails(user, property, h){
-        try{
-            const isUser = await User.findOne({where: {email: user.email}});
-            if(!isUser){
+    static async getPropertyDetails(user, property, h) {
+        try {
+            const isUser = await User.findOne({ where: { email: user.email } });
+            if (!isUser) {
                 return h.response({ message: "User not Found" }).code(404);
             }
 
@@ -353,11 +358,11 @@ export class Propertys {
                 // return h.response({ message: "Please Login First" }).code(400);
                 return h.view('message2');
             }
-            const owner = await User.findOne({where: {id: property.seller_id}});
+            const owner = await User.findOne({ where: { id: property.seller_id } });
 
-            return h.view('displayPropertyDetails', {PropertyDetails: property, user: isUser, owner: owner})
+            return h.view('displayPropertyDetails', { PropertyDetails: property, user: isUser, owner: owner })
         }
-        catch(err){
+        catch (err) {
             console.log(err);
             return h.response({ message: "Internal Server Error" }).code(500);
         }
