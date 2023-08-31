@@ -19,7 +19,8 @@ export class Request {
 
             const isRequested = await Buyrequest.findOne({ where: { [Op.and]: { user_id: isUser.id, property_id: property_id } } });
             if (isRequested) {
-                return h.response({ message: "Already Requested" });
+                // return h.response({ message: "Already Requested" });
+                return h.redirect('/message6')
             }
 
             const requetsDetails = ({

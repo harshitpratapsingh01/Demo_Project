@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buy Request Successful Message </title>
+  <title>Already Present Message </title>
 
   <meta name="author" content="Codeconvey" />
   <link rel="stylesheet" href="static/css/message.css">
@@ -36,14 +36,14 @@
                   r="32.53" />
               </svg>
               <h3 id='status'>
-                Success
+                Already Exist
               </h3>
             </div>
             <div id='lower-side'>
               <p id='message'>
-                Thank You For Your Intrest In This Property. Your Request Has Been Sent To The Owner, Please Wait Some Time For The Response of Property Owner By Email or Call.
+                This Property is Already Exist in your wishlist.
               </p>
-              <a href="./home?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" id="contBtn">Continue</a>
+              <a href="./getAllPropertys" id="contBtn">Continue</a>
             </div>
           </div>
 

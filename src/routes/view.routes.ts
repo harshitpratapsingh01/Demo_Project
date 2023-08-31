@@ -193,4 +193,25 @@ export const ViewRoutes = [
             }
         }
     },
+    {
+        method: "GET",
+        path: "/message4",
+        handler: (request,h) => {
+            return h.view('message4');
+        }
+    },
+    {
+        method: "GET",
+        path: "/message5",
+        handler: (request,h) => {
+            return h.view('message5');
+        }
+    },
+    {
+        method: "GET",
+        path: "/message6",
+        handler: (request,h) => {
+            return h.view('message6');
+        }
+    },
 ]

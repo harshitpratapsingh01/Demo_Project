@@ -18,7 +18,8 @@ export class Favorite{
 
             const isPresent = await Favorites.findOne({ where: { [Op.and]: { user_id: isUser.id, property_id: property_id } } });
             if(isPresent){
-                return h.response({message: "Already added to faviourites"});
+                // return h.response({message: "Already added to faviourites"});
+                return h.redirect('/message5');
             }
             const favorite_details = ({
                 property_id: property_id,
@@ -26,7 +27,8 @@ export class Favorite{
             })
             const favorites = await Favorites.create(favorite_details);
             console.log(favorites);
-            return h.response({success: true}).code(200);
+            // return h.response({success: true}).code(200);
+            return h.redirect('/message4');
         }
         catch(err){
             console.log(err);
