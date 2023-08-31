@@ -114,7 +114,7 @@
                                             <h5 class="text-primary mb-3">
                                                 <%= PropertyDetails.price %>
                                             </h5>
-                                            <a class="d-block h5 mb-2" href="">
+                                            <a class="d-block h5 mb-2">
                                                 <%= PropertyDetails.description %>
                                             </a>
                                             <p><i class="fa fa-map-marker-alt text-primary me-2"></i>
@@ -167,13 +167,13 @@
             <div>
                 <button style="font-weight: bold;
                 font-size: 20px;" class="btn btn-dark border-0 w-100 py-3" type="submit"
-                id="buyButton">Buy Now</button>
+                id="buyButton">Contact Owner</button>
             </div>
         <% } %>
 
         <script>
             document.getElementById("buyButton").addEventListener("click", function() {
-                window.location.href = "./addBuyer/<%= PropertyDetails.id %>";
+                window.location.href = "./buyRequets/<%= PropertyDetails.id %>";
             });
         </script>
 

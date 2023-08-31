@@ -335,10 +335,10 @@ export class Propertys {
             }
             // return h.response({ message: "Property Sold Successfully" });
             // return h.view('message3', {user: isUser});
-            await BuyRequest.property_buy_request(isUser, property_id);
+            // await BuyRequest.property_buy_request(isUser, property_id);
 
-            const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
-            return h.redirect('/message3?' + queryParams.toString());
+            // const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
+            // return h.redirect('/message3?' + queryParams.toString());
         }
         catch (err) {
             console.log(err);

@@ -3,6 +3,7 @@ import { OperationRoutes } from "./useroperation.routes";
 import { PropertyRoutes } from "./property.router";
 import { FavoritesRoutes } from "./favorite.route";
 import { ViewRoutes } from "./view.routes";
+import { MakeRequest } from "./request.routes";
 
 
 export let routes = [
@@ -10,5 +11,6 @@ export let routes = [
     ...OperationRoutes,
     ...PropertyRoutes,
     ...FavoritesRoutes,
-    ...ViewRoutes
+    ...ViewRoutes,
+    ...MakeRequest
 ];

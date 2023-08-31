@@ -2,7 +2,7 @@ import { User } from "./DbSchema";
 import { Session } from "./model.session";
 import { Property } from "./schema.property";
 import { Favorites } from "./user.favourites";
-
+import { Buyrequest } from "./BuyRequest.model";
 
 export async function syncmodels() {
     try{
@@ -10,6 +10,7 @@ export async function syncmodels() {
         await Session.sync({alter: true});
         await Property.sync({ alter: true });
         await Favorites.sync({alter: true});
+        await Buyrequest.sync({alter: true});
         console.log("all models sync successfully");
     }
     catch(err){
