@@ -72,8 +72,15 @@
                         <% if (user) { %>
                             <a href="./getprofile" class="nav-item nav-link">Welcome, <%= user.name %></a>
                             <% } %>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Feature</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="./getFavorites?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="dropdown-item">Wishlist</a>
+                                    <a href="./getBuyHistory?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="dropdown-item">Buy History</a>
+                                </div>
+                            </div>
                     </div>
-                    <a href="./getFavorites?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">Wishlist</a>
+                    <!-- <a href="./getFavorites?isUser=<%= encodeURIComponent(JSON.stringify(user)) %>" class="nav-item nav-link">Wishlist</a> -->
                     <!-- <a href="" class="btn btn-primary px-3 d-none d-lg-flex">Add Property</a> -->
                 </div>
             </nav>

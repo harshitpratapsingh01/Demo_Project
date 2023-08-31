@@ -1,6 +1,7 @@
 import { Favorites } from "../models/user.favourites";
 import { Property } from "../models/schema.property";
 import { User } from "../models/DbSchema";
+const { Op } = require("sequelize");
 import { Redis } from "../middleware/redis/redis.session";
 export class Favorite{
     static async addToFavorites(user,property_id,h){
@@ -15,13 +16,17 @@ export class Favorite{
                 return h.view('message2');
             }
 
+            const isPresent = await Favorites.findOne({ where: { [Op.and]: { user_id: isUser.id, property_id: property_id } } });
+            if(isPresent){
+                return h.response({message: "Already added to faviourites"});
+            }
             const favorite_details = ({
                 property_id: property_id,
                 user_id: isUser.id
             })
             const favorites = await Favorites.create(favorite_details);
             console.log(favorites);
-            return h.response({message: "Property Added to Favorites Successfully"}).code(200);
+            return h.response({success: true}).code(200);
         }
         catch(err){
             console.log(err);
@@ -57,7 +62,7 @@ export class Favorite{
 
     static async removeFromFavorite(user,property_id,h){
         try{
-            const isUser = await User.findOne({where: {email: user.email}});
+            const isUser: any = await User.findOne({where: {email: user.email}});
             if(!isUser){
                 return h.response({message: "User Not Found"}).code(404);
             }
@@ -65,10 +70,9 @@ export class Favorite{
             if(!isProperty){
                 return h.response({message: "No Property Found"}).code(404);
             }
-            else{
-                await isProperty.destroy();
-                return h.response({message: "Property Removed Successfully"}).code(200);
-            }
+            await isProperty.destroy();
+            // return h.response({message: "Property Removed Successfully"}).code(200);
+            return h.redirect('/getFavorites');
         }
         catch(err){
             console.log(err);

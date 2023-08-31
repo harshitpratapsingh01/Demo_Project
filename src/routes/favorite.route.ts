@@ -38,7 +38,7 @@ export const FavoritesRoutes = [
         }
     },
     {
-        method: "DELETE",
+        method: "GET",
         path: "/removeFromFavorite/{id}",
         options:{
             auth: 'user'
