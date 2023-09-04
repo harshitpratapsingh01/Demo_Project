@@ -6,6 +6,7 @@ import { request } from "http";
 import { Redis } from "../middleware/redis/redis.session";
 const { Op } = require("sequelize");
 import { BuyRequest } from "./controller.request";
+import { Buyrequest } from "../models/BuyRequest.model";
 
 export class Propertys {
     static async addProperty(user, Details, h) {
@@ -320,16 +321,18 @@ export class Propertys {
             if (!isUser) {
                 return h.response({ message: "User Not Found" }).code(404);
             }
-            const status = await Redis.isActiv(isUser);
-            if (!status) {
-                return h.response({ message: "Please Login First" }).code(400);
-            }
+            // const status = await Redis.isActiv(isUser);
+            // if (!status) {
+            //     // return h.response({ message: "Please Login First" }).code(400);
+            //     return h.view('message2');
+            // }
 
 
             const buyer = await Property.update(
                 { BuyerId: isUser.id, property_status: "SOLD OUT" },
                 { where: { id: property_id } });
 
+            const requestStatus = await Buyrequest.update({ requestStatus: "SOLD OUT" }, { where: { property_id: property_id } })
             if (!buyer) {
                 return h.response({ message: "Something Went Wrong" });
             }
@@ -337,8 +340,8 @@ export class Propertys {
             // return h.view('message3', {user: isUser});
             // await BuyRequest.property_buy_request(isUser, property_id);
 
-            // const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
-            // return h.redirect('/message3?' + queryParams.toString());
+            const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
+            return h.redirect('/message8?' + queryParams.toString());
         }
         catch (err) {
             console.log(err);

@@ -214,4 +214,29 @@ export const ViewRoutes = [
             return h.view('message6');
         }
     },
+    {
+        method: "GET",
+        path: "/message7",
+        handler: (request,h) => {
+            const username = request.query.user;
+            const property_id = request.query.property_id;
+            console.log(username);
+            console.log(property_id);
+            if(username && property_id){
+                return h.view('message7', {username, property_id});
+            }
+            return h.view('message7')
+        }
+    },
+    {
+        method: "GET",
+        path: "/message8",
+        handler: (request,h) => {
+            const isUser = JSON.parse(request.query.isUser);
+            if(isUser){
+                return h.view('message8', {user: isUser});
+            }
+            return h.view('message8');
+        }
+    },
 ]
