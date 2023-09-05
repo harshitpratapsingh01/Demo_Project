@@ -21,7 +21,7 @@ export const Property = sequelize.define('Product', {
     country: { type: Sequelize.STRING, allowNull: false },
     zipCode: { type: Sequelize.INTEGER, allowNull: false },
     BuyerId: { type: Sequelize.INTEGER, allowNull: true, references: { model: 'users', key: 'id' } },
-    location: {type: Sequelize.GEOMETRY('POINT'), allowNull: false, defaultValue: {"type":"Point","coordinates":[0.00, 0.000]}},
+    // location: {type: Sequelize.GEOMETRY('POINT'), allowNull: false, defaultValue: {"type":"Point","coordinates":[0.00, 0.000]}},
     property_status: {type: Sequelize.STRING, defaultValue: "UNSOLD"},
     createdAt: { type: Sequelize.DATE, defaultValue: Date.now() },
     updatedAt: { type: Sequelize.DATE, defaultValue: Date.now() }

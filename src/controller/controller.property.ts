@@ -22,10 +22,10 @@ export class Propertys {
             }
 
 
-            const point = {
-                type: 'Point',
-                coordinates: [Details.longitude, Details.latitude]
-            };
+            // const point = {
+            //     type: 'Point',
+            //     coordinates: [Details.longitude, Details.latitude]
+            // };
             const property_details = ({
                 property_type: Details.property_type,
                 description: Details.description,
@@ -42,7 +42,7 @@ export class Propertys {
                 state: Details.state,
                 country: Details.country,
                 zipCode: Details.zipCode,
-                location: point
+                // location: point
             });
             const property = await Property.create(property_details);
             console.log(property);
