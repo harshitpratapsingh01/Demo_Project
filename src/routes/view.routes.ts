@@ -179,6 +179,13 @@ export const ViewRoutes = [
     },
     {
         method: "GET",
+        path: "/message9",
+        handler: (request,h) => {
+            return h.view('message9');
+        }
+    },
+    {
+        method: "GET",
         path: "/message3",
         handler: (request,h) => {
             try {

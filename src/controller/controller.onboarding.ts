@@ -41,27 +41,25 @@ export class UserOnborading {
         try {
             const isUser: any = await User.findOne({ where: { email: payload.email } });
             console.log(isUser);
-            if (isUser) {
-                const hashpass = isUser.password;
-                if (bcrypt.compare(payload.password, hashpass)) {
-                    const token = jwt.sign({ email: payload.email }, process.env.SECRET_KEY, { expiresIn: '2d' });
-                    console.log(token);
-                    await Sessions.maintain_session(isUser);
-                    // return h.response({ status: "loggedIn Successfully", token }).code(200);
-                    // return h.redirect('/home');
-                    const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
-                    h.state('token', token, {
-                        isHttpOnly: true,
-                    });
-                    return h.redirect('/home?' + queryParams.toString());
-                }
-                else {
-                    return h.response({ status: "Incorrect Password" }).code(404);
-                }
+            if (!isUser) {
+                // return h.response({ status: "User not found" }).code(404);
+                return h.view('message9');
             }
-            else {
-                return h.response({ status: "User not found" }).code(404);
+            const hashpass = isUser.password;
+            if (!await bcrypt.compare(payload.password, hashpass)) {
+                return h.response({ status: "Incorrect Password" }).code(404);
             }
+            
+            const token = jwt.sign({ email: payload.email }, process.env.SECRET_KEY, { expiresIn: '2d' });
+            console.log(token);
+            await Sessions.maintain_session(isUser);
+            // return h.response({ status: "loggedIn Successfully", token }).code(200);
+            // return h.redirect('/home');
+            const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
+            h.state('token', token, {
+                isHttpOnly: true,
+            });
+            return h.redirect('/home?' + queryParams.toString());
         }
         catch (err) {
             return h.response({ status: "Server Error" }).code(500);
