@@ -1,39 +1,39 @@
-import { User } from "../models/DbSchema";
-import { Property } from "../models/schema.property";
-import { Redis } from "../middleware/redis/redis.session";
-import { Buyrequest } from "../models/BuyRequest.model";
-const { Op } = require("sequelize");
+
 import { BuyRequest } from "./controller.request";
+import { BuyRequestService } from "../services/buyRequest.service";
 
 export class Request {
     static async addRequest(user, property_id, h) {
         try {
-            const isUser: any = await User.findOne({ where: { email: user.email } });
-            if (!isUser) {
+            const response = await BuyRequestService.addRequest(user, property_id)
+            if (!response) {
                 return h.response({ message: "User Not Found" }).code(404);
             }
-            const status = await Redis.isActiv(isUser);
-            if (!status) {
-                return h.response({ message: "Please Login First" }).code(400);
+
+            if (response === "Not Found") {
+                return h.response({ message: "Property You want to Buy is Not Found" }).code(404);
             }
 
-            const isRequested = await Buyrequest.findOne({ where: { [Op.and]: { user_id: isUser.id, property_id: property_id } } });
-            if (isRequested) {
-                // return h.response({ message: "Already Requested" });
-                return h.redirect('/message6')
+            if (response === "Sold Out") {
+                return h.response({ message: "Property You want to Buy is SOLD OUT" }).code(404);
             }
 
-            const requetsDetails = ({
-                user_id: isUser.id,
-                property_id: property_id
-            })
-            const requests = await Buyrequest.create(requetsDetails);
-            console.log(requests);
+            if (response === "Already") {
+                return h.response({ message: "Already Requested" });
+                // return h.redirect('/message6')
+            }
 
-            await BuyRequest.property_buy_request(isUser, property_id);
+            await BuyRequest.property_buy_request(response.isUser, property_id);
 
-            const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
-            return h.redirect('/message3?' + queryParams.toString());
+            return h.response({
+                success: true, message: "Your Buy Request Successfully Sent to Owner",
+                BuyRequest: response.requests,
+                Buyer: response.isUser,
+                property: response.property
+            }).code(200);
+
+            // const queryParams = new URLSearchParams({ isUser: JSON.stringify(isUser) });
+            // return h.redirect('/message3?' + queryParams.toString());
         }
         catch (error) {
             console.log(error);
@@ -41,32 +41,39 @@ export class Request {
         }
     }
 
-    static async getUserBuyHistory(user, h) {
-        try{
-            const isUser: any = await User.findOne({ where: { email: user.email } });
-            if (!isUser) {
+    static async getUserBuyHistory(user, request, h) {
+        try {
+            const pageNumber = request.params.pageNumber || 1;
+            const pageSize = request.params.pageSize || 10;
+            const response = await BuyRequestService.getUserBuyHistory(user, pageNumber, pageSize);
+            if (!response) {
                 return h.response({ message: "User Not Found" }).code(404);
             }
-            const status = await Redis.isActiv(isUser);
-            if (!status) {
-                return h.response({ message: "Please Login First" }).code(400);
+
+            if (response === "Not Found") {
+                return h.response({ message: "No Buy History found" }).code(404);
             }
-    
-            const requests: any = await Buyrequest.findAll({ where: { user_id: isUser.id } });
-            if (!requests) {
-                return h.response({ message: "No Buy Request found" }).code(404);
-            }
-            const propertyDetails = [];
-            for (let i = 0; i < requests.length; i++) {
-                const details = await Property.findOne({ where: { id: requests[i].property_id } })
-                propertyDetails.push(details);
-            }
-            // return h.response({message: "Favorites Property's are: ", propertys, propertyDetails});
-            return h.view('property-history', { user: isUser, property: propertyDetails, request: requests });
+
+            return h.response({ message: "Property's Buy History are: ", response });
+            // return h.view('property-history', { user: isUser, property: propertyDetails, request: requests });
         }
-        catch(err){
+        catch (err) {
             console.log(err);
             return h.response({ message: "Internal Server Error" }).code(500);
         }
+    }
+
+    static async getPropertyBuyRequest(user,request,h) {
+        const pageNumber = request.params.pageNumber || 1;
+        const pageSize = request.params.pageSize || 10;
+        const response = await BuyRequestService.getPropertyBuyRequest(user,pageNumber,pageSize);
+        if(!response){
+            return h.response({ message: "User Not Found" }).code(404);
+        }
+        if (response === "Not Found") {
+            return h.response({ message: "No Buy Request found" }).code(404);
+        }
+
+        return h.response({ message: "Your Property's Buy Requests are: ", response });
     }
 }

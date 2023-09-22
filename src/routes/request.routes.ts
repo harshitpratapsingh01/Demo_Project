@@ -2,7 +2,7 @@ import { Request } from "../controller/controller.buyrequest";
 
 export const MakeRequest = [
     {
-        method: "GET",
+        method: "POST",
         path: "/buyRequets/{id}",
         options: {
             auth : "user"
@@ -15,13 +15,24 @@ export const MakeRequest = [
     },
     {
         method: "GET",
-        path: "/getBuyHistory",
+        path: "/getBuyHistory/{pageNumber}/{pageSize}",
         options: {
             auth: "user"
         },
         handler: (request,h) => {
             const {user} = request;
-            return Request.getUserBuyHistory(user,h);
+            return Request.getUserBuyHistory(user,request,h);
         }
-    }
+    },
+    {
+        method: "GET",
+        path: "/getBuyRequests/{pageNumber}/{pageSize}",
+        options: {
+            auth: "user"
+        },
+        handler: (request,h) => {
+            const {user} = request;
+            return Request.getPropertyBuyRequest(user,request,h);
+        }
+    },
 ]

@@ -43,7 +43,7 @@ const UserRoutes = [
         }
     },
     {
-        method: 'GET',
+        method: 'POST',
         path: '/logout',
         options: {
             auth: 'user'
@@ -62,11 +62,11 @@ const UserRoutes = [
         },
         options: {
             auth: false,
-            // validate: {
-            //     payload: Joi.object({
-            //         email: Joi.string().email().required(),
-            //     })
-            // }
+            validate: {
+                payload: Joi.object({
+                    email: Joi.string().email().required(),
+                })
+            }
         }
     },
     {

@@ -1,4 +1,4 @@
-import { sequelize } from "../core/DbConnection";
+import { sequelize } from "../utils/DbConnection";
 import Sequelize from "sequelize";
 import { User } from "./DbSchema";
 

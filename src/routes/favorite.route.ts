@@ -3,7 +3,7 @@ import { Favorite } from "../controller/constroller.favorites";
 
 export const FavoritesRoutes = [
     {
-        method: "GET",
+        method: "POST",
         path: "/addToFavorite/{id}",
         options:{
             auth: 'user'
@@ -16,29 +16,17 @@ export const FavoritesRoutes = [
     },
     {
         method: "GET",
-        path: "/addToFavorite",
-        options:{
-            auth: 'user'
-        },
-        handler: (request,h) => {
-            const {user} = request;
-            const property_id = request.params.id;
-            return Favorite.addToFavorites(user,property_id,h);
-        }
-    },
-    {
-        method: "GET",
-        path: "/getFavorites",
+        path: "/getFavorites/{pageNumber}/{pageSize}",
         options: {
             auth: 'user'
         },
         handler: (request, h) => {
             const {user} = request;
-            return Favorite.getPropertyFromFavorite(user,h);
+            return Favorite.getPropertyFromFavorite(user,request,h);
         }
     },
     {
-        method: "GET",
+        method: "DELETE",
         path: "/removeFromFavorite/{id}",
         options:{
             auth: 'user'

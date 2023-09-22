@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import { sequelize } from '../core/DbConnection';
+import { sequelize } from '../utils/DbConnection';
 
 
 export const User = sequelize.define('user', {

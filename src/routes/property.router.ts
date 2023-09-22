@@ -1,16 +1,35 @@
 import { Propertys } from "../controller/controller.property";
-import upload from "../middleware/imageUploader/image.uploader";
+import Joi from "joi"
+
 export const PropertyRoutes = [
     {
         method: "POST",
         path: "/addproperty",
-        options: {
-            auth: 'user'
-        },
         handler: (request, h) => {
             const { user } = request;
             const Details = request.payload
             return Propertys.addProperty(user, Details, h);
+        },
+        options: {
+            auth: "user",
+            validate: {
+                payload: Joi.object({
+                    property_type: Joi.string().required(),
+                    description: Joi.string().required(),
+                    sqrmeter: Joi.number().min(100).max(20000).required(),
+                    price: Joi.number().required(),
+                    bed: Joi.number().min(1).max(6).required(),
+                    bath: Joi.number().min(1).max(5).required(),
+                    featured: Joi.string().required(),
+                    house_no: Joi.string().required(),
+                    street: Joi.string().required(),
+                    area: Joi.string().required(),
+                    city: Joi.string().required(),
+                    state: Joi.string().required(),
+                    country: Joi.string().required(),
+                    zipCode: Joi.number().required(),
+                })
+            }
         }
     },
     {
@@ -45,13 +64,13 @@ export const PropertyRoutes = [
     },
     {
         method: "GET",
-        path: '/getAllPropertys',
+        path: '/getAllPropertys/{pageNumber}/{pageSize}',
         options: {
             auth: 'user'
         },
         handler: (request, h) => {
             const { user } = request;
-            return Propertys.getAllPropertys(user, h);
+            return Propertys.getAllPropertys(user, request, h);
         }
     },
     {
@@ -67,94 +86,102 @@ export const PropertyRoutes = [
     },
     {
         method: "GET",
-        path: '/getPropertyTypes1',
+        path: '/getPropertyTypes/{propertyType}/{pageNumber}/{pageSize}',
         options: {
             auth: 'user'
         },
         handler: (request, h) => {
             const {user} = request;
-            return Propertys.getPropertysByType1(user, h);
+            return Propertys.getPropertysByType(user,request, h);
         }
     },
-    {
-        method: "GET",
-        path: '/getPropertyTypes2',
-        options: {
-            auth: 'user'
-        },
-        handler: (request, h) => {
-            const {user} = request;
-            return Propertys.getPropertysByType2(user, h);
-        }
-    },
-    {
-        method: "GET",
-        path: '/getPropertyTypes3',
-        options: {
-            auth: 'user'
-        },
-        handler: (request, h) => {
-            const {user} = request;
-            return Propertys.getPropertysByType3(user, h);
-        }
-    },
-    {
-        method: "GET",
-        path: '/getPropertyTypes4',
-        options: {
-            auth: 'user'
-        },
-        handler: (request, h) => {
-            const {user} = request;
-            return Propertys.getPropertysByType4(user, h);
-        }
-    },
-    {
-        method: "GET",
-        path: '/getPropertyTypes5',
-        options: {
-            auth: 'user'
-        },
-        handler: (request, h) => {
-            const {user} = request;
-            return Propertys.getPropertysByType5(user, h);
-        }
-    },
+    // {
+    //     method: "GET",
+    //     path: '/getPropertyTypes2',
+    //     options: {
+    //         auth: 'user'
+    //     },
+    //     handler: (request, h) => {
+    //         const {user} = request;
+    //         return Propertys.getPropertysByType2(user, h);
+    //     }
+    // },
+    // {
+    //     method: "GET",
+    //     path: '/getPropertyTypes3',
+    //     options: {
+    //         auth: 'user'
+    //     },
+    //     handler: (request, h) => {
+    //         const {user} = request;
+    //         return Propertys.getPropertysByType3(user, h);
+    //     }
+    // },
+    // {
+    //     method: "GET",
+    //     path: '/getPropertyTypes4',
+    //     options: {
+    //         auth: 'user'
+    //     },
+    //     handler: (request, h) => {
+    //         const {user} = request;
+    //         return Propertys.getPropertysByType4(user, h);
+    //     }
+    // },
+    // {
+    //     method: "GET",
+    //     path: '/getPropertyTypes5',
+    //     options: {
+    //         auth: 'user'
+    //     },
+    //     handler: (request, h) => {
+    //         const {user} = request;
+    //         return Propertys.getPropertysByType5(user, h);
+    //     }
+    // },
     {
         method: "POST",
         path: "/searchProperty",
-        options: {
-            auth: 'user'
-        },
         handler: (request, h) => {
             const { user } = request;
             const details = request.payload;
             return Propertys.searchProperty(user, details, h);
-        }
+        },
+        options: {
+            auth: 'user',
+            validate: {
+                payload: Joi.object({
+                    city: Joi.string().required(),
+                    featured: Joi.string().required(),
+                    property_type: Joi.string().required(),
+                })
+            }
+        },
     },
 
     {
-        method: "GET",
-        path: "/addBuyer/{id}",
+        method: "POST",
+        path: "/addBuyer/{id}/{BuyerId}",
         options: {
             auth: 'user'
         },
         handler: (request, h) => {
             const { user } = request;
             const property_id = request.params.id;
-            return Propertys.buyProperty(user, property_id, h);
+            const BuyerId = request.params.BuyerId;
+            return Propertys.buyProperty(user, property_id, BuyerId, h);
         }
     },
     {
         method: "GET",
-        path: "/PropertyDetails",
+        path: "/PropertyDetails/{PropertyId}",
         options: {
             auth: 'user'
         },
         handler: (request,h) => {
             const {user} = request;
-            const property = JSON.parse(request.query.property);
-            return Propertys.getPropertyDetails(user,property,h);
+            const propertyId = request.params.PropertyId
+            return Propertys.getPropertyDetails(user,propertyId,h);
         }
     }
 

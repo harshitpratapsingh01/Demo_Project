@@ -1,6 +1,6 @@
 import hapi from "@hapi/hapi";
 import * as dotenv from 'dotenv';
-import { Connection } from "./src/core/DbConnection";
+import { Connection } from "./src/utils/DbConnection";
 import { routes } from "./src/routes/index.routes";
 import plugin from "./src/middleware/userAuth";
 import inert from "@hapi/inert";

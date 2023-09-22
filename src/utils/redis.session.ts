@@ -70,9 +70,9 @@ export class Redis {
     }
 
 
-    static async isActiv(isUser) {
-        if (await client.exists(isUser.username)) {
-            const session = await client.get(isUser.username);
+    static async isActiv(username) {
+        if (await client.exists(username)) {
+            const session = await client.get(username);
             const session_data = JSON.parse(session)
             return session_data.status;
         }

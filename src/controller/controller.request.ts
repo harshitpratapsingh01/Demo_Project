@@ -77,6 +77,23 @@ export class BuyRequest {
                                     <p>I hope this email finds you well. I am writing to inform you that there has been a keen interest in your property listing on our platform. A potential buyer/renter has expressed interest in learning more about your property, and I wanted to share their details with you.</p>
 
                                     <div class="contact-details">
+                                        <h2>On Property :</h2>
+                                        <p>PropertyType: ${property.property_type}</p>
+                                        <p>Description: ${property.description}</p>
+                                        <p>SqrMeter: ${property.sqrmeter}</p>
+                                        <p>Price: ${property.price}</p>
+                                        <p>Bed: ${property.bed}</p> 
+                                        <p>Bath: ${property.bath}</p>
+                                        <p>Featured: ${property.featured}</p>
+                                        <p>House No: ${property.house_no}</p> 
+                                        <p>Street: ${property.street}</p>
+                                        <p>Area: ${property.area}</p>
+                                        <p>City: ${property.city}</p> 
+                                        <p>ZipCode: ${property.zipCode}</p>
+                                        <p>Property Status: ${property.property_status}</p>
+                                    </div>
+
+                                    <div class="contact-details">
                                         <h2>Interested Person Details:</h2>
                                         <p>Name: ${user.name}</p>
                                         <p>Contact Email: ${user.email}</p>
