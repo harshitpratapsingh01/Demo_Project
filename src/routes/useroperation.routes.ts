@@ -1,4 +1,4 @@
-import { types } from "joi";
+import Joi from "joi"
 import Hapi from "@hapi/hapi"
 import { UserOperations } from "../controller/constroller.useroperation";
 import upload from "../middleware/imageUploader/image.uploader";
@@ -33,18 +33,27 @@ export const OperationRoutes = [
         path: "/setProfile",
         handler: (request, h) => {
             const { user } = request
-            return UserOperations.set_profile_pic(user, request, h);
+            const file = request.payload;
+            return UserOperations.set_profile_pic(user, file, h);
         },
         options: {
             auth: 'user',
+            tags: ['api','useroperation'],
+            plugins: { 'hapi-swagger': { payloadType: 'form', consumes: ['multipart/form-data'] } },
             payload: {
                 output: 'stream',
-                maxBytes: 5000000,
+                maxBytes: 5000000, // 5MB maximum file size
                 parse: true,
                 allow: 'multipart/form-data',
                 multipart: true
             },
-            tags: ['api','useroperation'],
+            validate: {
+                payload: Joi.object({
+                    file: Joi.any()
+                        .meta({ swaggerType: 'file' })
+                        .optional()
+                })
+            },
         },
     }
 ]

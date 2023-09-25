@@ -26,9 +26,8 @@ export class Propertys {
         }
     }
 
-    static async setPropertyImages(user, propertyId, request, h) {
+    static async setPropertyImages(user, propertyId, data, h) {
         try {
-            const data: any = request.payload;
 
             if (!data.file) {
                 return h.response({ message: "No file provided" }).code(400);

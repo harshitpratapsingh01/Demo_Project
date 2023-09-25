@@ -21,7 +21,7 @@ const UserRoutes = [
                     email: Joi.string().email().required(),
                     password: Joi.string().min(8).max(30).required(),
                     mobile_no: Joi.number().min(6000000000).max(9999999999).required(),
-                    profilePic: Joi.string().trim()
+                    // profilePic: Joi.string().trim()
                 })
             }
         }

@@ -36,12 +36,12 @@ export class UserOperations {
     }
 
 
-    static async set_profile_pic(user, request: any, h) {
+    static async set_profile_pic(user, data, h) {
         try {
             if (!user) {
                 return h.response({ message: "User Not Found" }).code(404);
             }
-            const data: any = request.payload;
+            // const data: any = request.payload;
 
             if (!data.file) {
                 return h.response({ message: "No file provided" }).code(400);

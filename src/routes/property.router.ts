@@ -35,18 +35,20 @@ export const PropertyRoutes = [
     },
     {
         method: "POST",
-        path: "/propertyImages/{id}",
+        path: "/propertyImages/{propertyId}",
         handler: (request, h) => {
             const { user } = request
-            const propertyId = request.params.id;
-            return Propertys.setPropertyImages(user, propertyId, request, h);
+            const propertyId = request.params.propertyId;
+            const file = request.payload;
+            return Propertys.setPropertyImages(user, propertyId, file, h);
         },
         options: {
             auth: 'user',
             tags: ['api','property'],
+            plugins: { 'hapi-swagger': { payloadType: 'form', consumes: ['multipart/form-data'] } },
             payload: {
                 output: 'stream',
-                maxBytes: 5000000,
+                maxBytes: 5000000, // 5MB maximum file size
                 parse: true,
                 allow: 'multipart/form-data',
                 multipart: true
@@ -54,6 +56,11 @@ export const PropertyRoutes = [
             validate: {
                 params: Joi.object({
                     propertyId: Joi.number().required(),
+                }),
+                payload: Joi.object({
+                    file: Joi.any()
+                        .meta({ swaggerType: 'file' })
+                        .required()
                 })
             }
         }
