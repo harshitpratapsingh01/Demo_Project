@@ -27,10 +27,8 @@ export class Favorite{
         }
     }
 
-    static async getPropertyFromFavorite(user,request,h){
+    static async getPropertyFromFavorite(user,pageNumber,pageSize,h){
         try{
-            const pageNumber = request.params.pageNumber || 1;
-            const pageSize = request.params.pageSize || 10;
             const response = await FavoriteService.getPropertyFromFavorite(user,pageNumber,pageSize);
             if(!response){
                 return h.response({message: "User not Found"}).code(404);

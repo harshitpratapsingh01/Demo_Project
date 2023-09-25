@@ -42,7 +42,15 @@ export class UserService {
     }
 
     static async logoutService(data) {
-        const isUser: any = await User.findOne({ where: { email: data.email } });
+        const isUser: any = await User.findOne({
+            where: {
+                email: data.email
+            }, attributes: {
+                exclude: [
+                    'password', 'createdAt', 'updatedAt'
+                ]
+            }
+        });
         if (!isUser) {
             return null;
         }

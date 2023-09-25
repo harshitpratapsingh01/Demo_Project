@@ -41,10 +41,8 @@ export class Request {
         }
     }
 
-    static async getUserBuyHistory(user, request, h) {
+    static async getUserBuyHistory(user, pageNumber, pageSize, h) {
         try {
-            const pageNumber = request.params.pageNumber || 1;
-            const pageSize = request.params.pageSize || 10;
             const response = await BuyRequestService.getUserBuyHistory(user, pageNumber, pageSize);
             if (!response) {
                 return h.response({ message: "User Not Found" }).code(404);
@@ -63,17 +61,21 @@ export class Request {
         }
     }
 
-    static async getPropertyBuyRequest(user,request,h) {
-        const pageNumber = request.params.pageNumber || 1;
-        const pageSize = request.params.pageSize || 10;
-        const response = await BuyRequestService.getPropertyBuyRequest(user,pageNumber,pageSize);
-        if(!response){
-            return h.response({ message: "User Not Found" }).code(404);
+    static async getPropertyBuyRequest(user,pageNumber,pageSize,h) {
+        try{
+            const response = await BuyRequestService.getPropertyBuyRequest(user,pageNumber,pageSize);
+            if(!response){
+                return h.response({ message: "User Not Found" }).code(404);
+            }
+            if (response === "Not Found") {
+                return h.response({ message: "No Buy Request found" }).code(404);
+            }
+    
+            return h.response({ message: "Your Property's Buy Requests are: ", response });
         }
-        if (response === "Not Found") {
-            return h.response({ message: "No Buy Request found" }).code(404);
+        catch(err){
+            console.log(err);
+            return h.response({ message: "Internal Server Error" }).code(500);
         }
-
-        return h.response({ message: "Your Property's Buy Requests are: ", response });
     }
 }

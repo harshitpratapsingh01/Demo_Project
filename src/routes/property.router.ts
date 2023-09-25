@@ -220,15 +220,15 @@ export const PropertyRoutes = [
         path: "/PropertyDetails/{PropertyId}",
         handler: (request,h) => {
             const {user} = request;
-            const propertyId = request.params.PropertyId
-            return Propertys.getPropertyDetails(user,propertyId,h);
+            const PropertyId = request.params.PropertyId
+            return Propertys.getPropertyDetails(user,PropertyId,h);
         },
         options: {
             auth: 'user',
             tags: ['api','property'],
             validate: {
                 params: Joi.object({
-                    propertyId: Joi.number().required()
+                    PropertyId: Joi.number().required()
                 })
             }
         },
