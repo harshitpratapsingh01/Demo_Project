@@ -26,9 +26,8 @@ export class Propertys {
         }
     }
 
-    static async setPropertyImages(user, request, h) {
+    static async setPropertyImages(user, propertyId, request, h) {
         try {
-            const propertyId = request.params.id;
             const data: any = request.payload;
 
             if (!data.file) {
@@ -91,10 +90,8 @@ export class Propertys {
     }
 
 
-    static async getAllPropertys(user, request, h) {
+    static async getAllPropertys(user, pageNumber, pageSize, h) {
         try {
-            const pageNumber = request.params.pageNumber || 1;
-            const pageSize = request.params.pageSize || 10;
             const response = await PropertyService.getAllProperty(user,pageNumber,pageSize);
             if (!response) {
                 return h.response({ message: "User not Found" }).code(404);
@@ -138,13 +135,9 @@ export class Propertys {
         }
     }
 
-    static async getPropertysByType(user, request, h) {
+    static async getPropertysByType(user, propertyType, pageNumber, pageSize, h) {
         try {
-            const pageNumber = request.params.pageNumber || 1;
-            const pageSize = request.params.pageSize || 10;
-            const propertyTypes = request.params.propertyType;
-
-            const response = await PropertyService.getPropertyByTypes(user,propertyTypes,pageNumber,pageSize);
+            const response = await PropertyService.getPropertyByTypes(user,propertyType,pageNumber,pageSize);
             if (!response) {
                 return h.response({ message: "User not Found" }).code(404);
             }

@@ -13,6 +13,7 @@ const UserRoutes = [
         },
         options: {
             auth: false,
+            tags: ['api','user'],
             validate: {
                 payload: Joi.object({
                     username: Joi.string().min(6).max(30).required(),
@@ -34,6 +35,7 @@ const UserRoutes = [
         },
         options: {
             auth: false,
+            tags: ['api','user'],
             validate: {
                 payload: Joi.object({
                     email: Joi.string().email().required(),
@@ -45,12 +47,13 @@ const UserRoutes = [
     {
         method: 'POST',
         path: '/logout',
-        options: {
-            auth: 'user'
-        },
         handler: (request, h) => {
             const { user } = request
             return UserOnborading.logout_user(user, h);
+        },
+        options: {
+            auth: 'user',
+            tags: ['api','user'],
         }
     },
     {
@@ -62,6 +65,7 @@ const UserRoutes = [
         },
         options: {
             auth: false,
+            tags: ['api','user'],
             validate: {
                 payload: Joi.object({
                     email: Joi.string().email().required(),
@@ -78,6 +82,7 @@ const UserRoutes = [
         },
         options: {
             auth: false,
+            tags: ['api','user'],
             validate: {
                 payload: Joi.object({
                     email: Joi.string().email().required(),

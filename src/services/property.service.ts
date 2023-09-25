@@ -3,6 +3,7 @@ import { Property } from "../models/schema.property";
 import fs from "fs";
 import { Op } from "sequelize";
 import { Buyrequest } from "../models/BuyRequest.model";
+import { Favorites} from "../models/user.favourites";
 import { PropertyBuyRequest } from "../models/PropertyRequest.model";
 
 export class PropertyService {
@@ -69,9 +70,27 @@ export class PropertyService {
             return null;
         }
 
+        const isFavourites = await Favorites.findAll({where: {property_id: propertyId}});
+        const isBuyHistory = await Buyrequest.findAll({where: {property_id: propertyId}});
+        const isBuyRequest = await PropertyBuyRequest.findAll({where: {property_id: propertyId}})
         const property = await Property.findOne({ where: { [Op.and]: { seller_id: isUser.id, id: propertyId } } });
         if (!property) {
             return "Not Found"
+        }
+        if(isFavourites.length){
+            isFavourites.forEach(favourites => {
+                favourites.destroy();
+            });
+        }
+        if(isBuyHistory.length){
+            isBuyHistory.forEach(buyhistory => {
+                buyhistory.destroy();
+            });
+        }
+        if(isBuyRequest.length){
+            isBuyRequest.forEach(buyrequest => {
+                buyrequest.destroy();
+            });
         }
         await property.destroy();
         return true;

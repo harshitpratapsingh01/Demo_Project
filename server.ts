@@ -2,7 +2,7 @@ import hapi from "@hapi/hapi";
 import * as dotenv from 'dotenv';
 import { Connection } from "./src/utils/DbConnection";
 import { routes } from "./src/routes/index.routes";
-import plugin from "./src/middleware/userAuth";
+import { plugins } from "./swagger/swaggerDocs";
 import inert from "@hapi/inert";
 import vision from "@hapi/vision";
 import path from "path";
@@ -19,7 +19,7 @@ class Init {
 
         await Connection.dbconnection();
         // await syncmodels();
-        await server.register(plugin);
+        await server.register(plugins);
         await server.register([vision, inert]);
 
         server.views({

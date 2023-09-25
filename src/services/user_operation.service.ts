@@ -4,6 +4,7 @@ import { Property } from "../models/schema.property";
 import fs from "fs";
 import { Favorites } from "../models/user.favourites";
 import { Buyrequest } from "../models/BuyRequest.model";
+import { PropertyBuyRequest } from "../models/PropertyRequest.model";
 
 export class UserOpertaionService {
     static async getProfileService(user) {
@@ -19,19 +20,31 @@ export class UserOpertaionService {
         if (!isUser) {
             return null
         }
-        const isProperty = await Property.findOne({ where: { seller_id: isUser.id } });
+        const isProperty = await Property.findAll({ where: { seller_id: isUser.id } });
         const isSession = await Session.findOne({ where: { userId: isUser.id } });
-        const isFavourites = await Favorites.findOne({ where: { user_id: isUser.id } });
-        const isBuyHistory = await Buyrequest.findOne({ where: { user_id: isUser.id } });
+        const isFavourites = await Favorites.findAll({ where: { user_id: isUser.id } });
+        const isBuyHistory = await Buyrequest.findAll({ where: { user_id: isUser.id } });
+        const isBuyRequest = await PropertyBuyRequest.findAll({where: {user_id: isUser.id}});
 
-        if (isFavourites) {
-            await isFavourites.destroy();
+        if (isFavourites.length) {
+            isFavourites.forEach(favourites => {
+                favourites.destroy();
+            });
         }
-        if (isBuyHistory) {
-            await isBuyHistory.destroy();
+        if(isBuyRequest.length){
+            isBuyRequest.forEach(buyrequest => {
+                buyrequest.destroy();
+            });
         }
-        if (isProperty) {
-            await isProperty.destroy();
+        if (isBuyHistory.length) {
+            isBuyHistory.forEach(buyhistory => {
+                buyhistory.destroy();
+            });
+        }
+        if (isProperty.length) {
+            isProperty.forEach(property => {
+                property.destroy();
+            });
         }
         if (isSession) {
             await isSession.destroy();
