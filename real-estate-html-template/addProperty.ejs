@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Property</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .property-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            text-align: right;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="property-form">
+        <h2>Property Details Form</h2>
+        <form action="/addproperty" method="POST">
+            <div class="form-group">
+                <label for="property_type">Property Type</label>
+                <!-- <input type="text" id="property_type" name="property_type" required> -->
+                <select id="FeaturedType" name="property_type" required>
+                    <option value="" disabled selected>Select Property Type</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Home">Home</option>
+                    <option value="Office">Office</option>
+                    <option value="Shop">Shop</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="description">Area</label>
+                <input type="number" id="sqrmeter" name="sqrmeter" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Price</label>
+                <input type="number" id="price" name="price" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="featured">Featured</label>
+                <select id="FeaturedType" name="featured" required>
+                    <option value="" disabled selected>Select Feature</option>
+                    <option value="For Sell">For Sell</option>
+                    <option value="For Rent">For Rent</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">House No</label>
+                <input type="text" id="house_no" name="house_no" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Street</label>
+                <input type="text" id="street" name="street" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Locality</label>
+                <input type="text" id="area" name="area" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="description">City</label>
+                <select class="form-select border-0 py-3" name="city">
+                    <option selected>Location</option>
+                    <option value="Gurgaon">Gurgaon</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Pune">Pune</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Noida">Noida</option>
+                    <option value="Greater_Noida">Greater_Noida</option>
+                    <option value="Ghaziabad">Ghaziabad</option>
+                    <option value="Fariadabad">Fariadabad</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">State</label>
+                <input type="text" id="state" name="state" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Country</label>
+                <input type="text" id="country" name="country" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Zip Code</label>
+                <input type="number" id="zipCode" name="zipCode" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Bed</label>
+                <input type="number" id="bed" name="bed" rows="4" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Bath</label>
+                <input type="number" id="bath" name="bath" rows="4" required>
+            </div>
+            <!-- <div class="form-group">
+                <label for="description">Property Latitude</label>
+                <input type="number" id="latitude" name="latitude" rows="4" step="0.0000001" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Property Longitude</label>
+                <input type="number" id="longitude" name="longitude" rows="4" step="0.0000001" required>
+            </div> -->
+            <div class="button">
+                <button type="submit" id="addProperty" >Save & Next</button>
+            </div>
+        </form>
+        <script>
+            document.getElementById("addProperty").addEventListener("click", function () {
+                window.location.href = "./PropertyImages";
+            });
+        </script>
+    </div>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 import  Sequelize  from "sequelize";
-import { sequelize } from "../core/DbConnection";
+import { sequelize } from "../utils/DbConnection";
 
-const Favorites = sequelize.define('favourite', {
+export const Favorites = sequelize.define('favourite', {
     id: {
         type:Sequelize.INTEGER,
         primaryKey: true,
@@ -19,8 +19,6 @@ const Favorites = sequelize.define('favourite', {
     }
 });
 
-(async function(){
-    await Favorites.sync({alter: true});
-})();
-
-export default Favorites;
+// (async function(){
+//     await Favorites.sync({alter: true});
+// })();

@@ -1,9 +1,8 @@
 import Sequelize from 'sequelize';
-import { sequelize } from '../core/DbConnection';
-import { Property } from './schema.property';
+import { sequelize } from '../utils/DbConnection';
 
 
-const User = sequelize.define('user', {
+export const User = sequelize.define('user', {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     username: { type: Sequelize.STRING, unique: true, allowNull: false },
     name: {type: Sequelize.STRING, allowNull: false},
@@ -15,8 +14,6 @@ const User = sequelize.define('user', {
     updatedAt: { type: Sequelize.DATE, defaultValue: Date.now() }
 });
 
-(async function() {
-    await User.sync({alter: true});
-})();
-
-export { User };
+// (async function() {
+//     await User.sync({alter: true});
+// })();

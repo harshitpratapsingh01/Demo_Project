@@ -1,51 +1,39 @@
-import Session from "../models/model.session";
-import { Redis } from "../middleware/redis/redis.session";
+import { Redis } from "../utils/redis.session";
+import SessionService from "../services/user_session.service";
 
 export class Sessions {
     static async maintain_session(isUser) {
-        try {
-            const user = isUser.id;
-            const isSession: any = await Session.findOne({ where: { userId: user } })
-            console.log(isSession);
-            if (!isSession) {
-                const session_details = {
-                    userId: user,
-                    status: true
-                };
-                const session = await Session.create(session_details);
-                console.log("Session stored successfully");
-                console.log(session);
+        try{
+            const session = await SessionService.session_store(isUser)
+            if(!session){
+                console.log("Error in Storing Session");
             }
-            else {
-                if (!isSession.status) {
-                    await Session.update({ status: !isSession.status }, { where: { userId: user } });
-                    console.log("Session Activate");
-                }
-                else{
-                    console.log("Session is already Active");
-                }
+            else if(session == "Active"){
+                console.log("User Is Already Active");
             }
-            await Redis.maintain_session_redis(isUser);
+            else{
+                console.log("Session Created Successfully: ", session);
+                await Redis.maintain_session_redis(isUser);
+            }
         }
-        catch (err) {
-            console.log("Server Error")
+        catch(error){
+            console.log("Server Error: ", error);
         }
     }
 
-    static async update_session(user_id) {
-        const isSession: any = await Session.findOne({ where: { userId: user_id } })
-        if (isSession) {
-            if (isSession.status) {
-                await Session.update({ status: !isSession.status }, { where: { userId: user_id } });
-                return true;
-            }
-            else {
-                console.log("user already inactive")
+    static async sessionOut(user){
+        try{
+            const sessionOut = await SessionService.update_session(user.id)
+            if(!sessionOut){
+                console.log("Error in Updating SessionOut");
                 return false;
             }
+            console.log("SessionOut Updated Successfully");
+            await Redis.logout_session_redis(user);
+            return true;
         }
-        else {
-            return false;
+        catch(error){
+            console.log("Server Error: ", error);
         }
     }
 }
